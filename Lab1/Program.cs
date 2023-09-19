@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace Lab1
@@ -200,12 +201,12 @@ namespace Lab1
         // Display the sorted employee data in a table
         public void DisplayTable()
         {
-            Console.WriteLine($"{"Name",-20} {"Number",-10} {"Rate",-10} {"Hours",-10} {"Gross Pay",-10}");
-            Console.WriteLine(new string('-', 70));
+            Console.WriteLine($"{"Name|",-20} {"Number|",-10} {"Rate|",-10} {"Hours|",-10} {"Gross Pay|",-10}");
+            Console.WriteLine(new string('=', 65));
 
             for (int i = 0; i < employeeCount; i++)
             {
-                Console.WriteLine(employees[i]);
+                Console.WriteLine($"|{employees[i]}|");
             }
         }
 
@@ -220,15 +221,18 @@ namespace Lab1
 
             while (!exit)
             {
-                Console.WriteLine(@"@$Menu:
+                string menu =
+$@"
+Please select any
+------------------------------------------
 1. Sort by Employee Name (ascending)
 2. Sort by Employee Number (ascending)
 3. Sort by Employee Pay Rate (descending)
 4. Sort by Employee Hours (descending)
 5. Sort by Employee Gross Pay (descending)
-6. Exit");
-
-                Console.Write("Enter your choice: ");
+6. Exit
+Enter your choice: ";
+                Console.WriteLine(menu);
                 int choice;
 
                 if (int.TryParse(Console.ReadLine(), out choice))
@@ -263,6 +267,8 @@ namespace Lab1
 
                         case 6:
                             exit = true;
+                            Console.WriteLine("Ciao. ");
+                            Thread.Sleep(2000);
                             break;
 
                         default:

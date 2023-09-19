@@ -79,7 +79,7 @@ namespace Lab1
         {
             this.rate = rate;
         }
-
+        
         // ToString method to format employee information
         public override string ToString()
         {
