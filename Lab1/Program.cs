@@ -1,4 +1,5 @@
-﻿using System;
+﻿//I, Sujan Rokad, 000882948 certify that this material is my origianl work. No other person's work has been used without due acknowledgement.
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -11,22 +12,26 @@ namespace Lab1
 
     public class Program
     {
-        // Employee array to store employee data
+        // Employee array to store upto 100 employee data.
         private Employee[] employees = new Employee[100];
+
+        //variable to keep track of how many employee's data has been read from CSV file and stores it in an Employee array.
         private int employeeCount = 0;
 
-        // Read employee data from CSV file
+        //A method that is responsible for reading data from CSV file.
         public void Read(string filePath)
         {
             try
             {
-                using (FileStream file = new FileStream(filePath, FileMode.Open, FileAccess.Read))
-                using (StreamReader data = new StreamReader(file))
+                using (StreamReader data = new StreamReader(filePath))
                 {
                     string line;
                     while ((line = data.ReadLine()) != null)
                     {
+                        //An array of string object that split each CSV file line with comma and stores it in employeeData array.
                         string[] employeeData = line.Split(',');
+                        
+                        //If statement that checks if splitted data that stored in array has length of 4 and if it does then goes into if condition.
                         if (employeeData.Length == 4)
                         {
                             string name = employeeData[0].Trim();
@@ -41,155 +46,134 @@ namespace Lab1
             }
             catch (Exception e)
             {
-                Console.WriteLine("The file could not be read:");
+                Console.WriteLine("Unable to read file:");
                 Console.WriteLine(e.Message);
             }
         }
 
-        // Implement QuickSort algorithm for sorting employees by name
-        private void QuickSortByName(int left, int right)
+        public void SelectionSortByName()
         {
-            if (left < right)
-            {
-                int pivotIndex = PartitionByName(left, right);
-                QuickSortByName(left, pivotIndex - 1);
-                QuickSortByName(pivotIndex + 1, right);
-            }
-        }
+            int n = employeeCount;
 
-        private int PartitionByName(int left, int right)
-        {
-            string pivot = employees[right].GetName();
-            int i = left - 1;
-
-            for (int j = left; j < right; j++)
+            for (int i = 0; i < n - 1; i++)
             {
-                if (string.Compare(employees[j].GetName(), pivot) < 0)
+                int minIndex = i;
+
+                for (int j = i + 1; j < n; j++)
                 {
-                    i++;
-                    Swap(i, j);
+                    if (string.Compare(employees[j].GetName(), employees[minIndex].GetName()) < 0)
+                    {
+                        minIndex = j;
+                    }
                 }
-            }
 
-            Swap(i + 1, right);
-            return i + 1;
+                // Swap employees[i] and employees[minIndex]
+                Employee temp = employees[i];
+                employees[i] = employees[minIndex];
+                employees[minIndex] = temp;
+            }
         }
+
 
         // QuickSort algorithm for sorting employees by Employee Number (ascending)
-        public void QuickSortByNumber(int left, int right)
+        public void SelectionSortByNumber()
         {
-            if (left < right)
-            {
-                int pivotIndex = PartitionByNumber(left, right);
-                QuickSortByNumber(left, pivotIndex - 1);
-                QuickSortByNumber(pivotIndex + 1, right);
-            }
-        }
+            int n = employeeCount;
 
-        private int PartitionByNumber(int left, int right)
-        {
-            int pivot = employees[right].GetNumber();
-            int i = left - 1;
-
-            for (int j = left; j < right; j++)
+            for (int i = 0; i < n - 1; i++)
             {
-                if (employees[j].GetNumber() < pivot)
+                int minIndex = i;
+
+                for (int j = i + 1; j < n; j++)
                 {
-                    i++;
-                    Swap(i, j);
+                    if (employees[j].GetNumber() < employees[minIndex].GetNumber())
+                    {
+                        minIndex = j;
+                    }
                 }
-            }
 
-            Swap(i + 1, right);
-            return i + 1;
+                // Swap employees[i] and employees[minIndex]
+                Employee temp = employees[i];
+                employees[i] = employees[minIndex];
+                employees[minIndex] = temp;
+            }
         }
+
 
         // QuickSort algorithm for sorting employees by Employee Pay Rate (descending)
-        public void QuickSortByRateDescending(int left, int right)
+        public void SelectionSortByRateDescending()
         {
-            if (left < right)
-            {
-                int pivotIndex = PartitionByRateDescending(left, right);
-                QuickSortByRateDescending(left, pivotIndex - 1);
-                QuickSortByRateDescending(pivotIndex + 1, right);
-            }
-        }
+            int n = employeeCount;
 
-        private int PartitionByRateDescending(int left, int right)
-        {
-            decimal pivot = employees[right].GetRate();
-            int i = left - 1;
-
-            for (int j = left; j < right; j++)
+            for (int i = 0; i < n - 1; i++)
             {
-                if (employees[j].GetRate() > pivot)
+                int maxIndex = i;
+
+                for (int j = i + 1; j < n; j++)
                 {
-                    i++;
-                    Swap(i, j);
+                    if (employees[j].GetRate() > employees[maxIndex].GetRate())
+                    {
+                        maxIndex = j;
+                    }
                 }
-            }
 
-            Swap(i + 1, right);
-            return i + 1;
+                // Swap employees[i] and employees[maxIndex]
+                Employee temp = employees[i];
+                employees[i] = employees[maxIndex];
+                employees[maxIndex] = temp;
+            }
         }
+
 
         // QuickSort algorithm for sorting employees by Employee Hours (descending)
-        public void QuickSortByHoursDescending(int left, int right)
+        public void SelectionSortByHoursDescending()
         {
-            if (left < right)
-            {
-                int pivotIndex = PartitionByHoursDescending(left, right);
-                QuickSortByHoursDescending(left, pivotIndex - 1);
-                QuickSortByHoursDescending(pivotIndex + 1, right);
-            }
-        }
+            int n = employeeCount;
 
-        private int PartitionByHoursDescending(int left, int right)
-        {
-            double pivot = employees[right].GetHours();
-            int i = left - 1;
-
-            for (int j = left; j < right; j++)
+            for (int i = 0; i < n - 1; i++)
             {
-                if (employees[j].GetHours() > pivot)
+                int maxIndex = i;
+
+                for (int j = i + 1; j < n; j++)
                 {
-                    i++;
-                    Swap(i, j);
+                    if (employees[j].GetHours() > employees[maxIndex].GetHours())
+                    {
+                        maxIndex = j;
+                    }
                 }
-            }
 
-            Swap(i + 1, right);
-            return i + 1;
+                // Swap employees[i] and employees[maxIndex]
+                Employee temp = employees[i];
+                employees[i] = employees[maxIndex];
+                employees[maxIndex] = temp;
+            }
         }
+
 
         // QuickSort algorithm for sorting employees by Employee Gross Pay (descending)
-        public void QuickSortByGrossPayDescending(int left, int right)
+        public void SelectionSortByGrossPayDescending()
         {
-            if (left < right)
-            {
-                int pivotIndex = PartitionByGrossPayDescending(left, right);
-                QuickSortByGrossPayDescending(left, pivotIndex - 1);
-                QuickSortByGrossPayDescending(pivotIndex + 1, right);
-            }
-        }
+            int n = employeeCount;
 
-        private int PartitionByGrossPayDescending(int left, int right)
-        {
-            decimal pivot = employees[right].GetGross();
-            int i = left - 1;
-
-            for (int j = left; j < right; j++)
+            for (int i = 0; i < n - 1; i++)
             {
-                if (employees[j].GetGross() > pivot)
+                int maxIndex = i;
+
+                for (int j = i + 1; j < n; j++)
                 {
-                    i++;
-                    Swap(i, j);
+                    if (employees[j].GetGross() > employees[maxIndex].GetGross())
+                    {
+                        maxIndex = j;
+                    }
                 }
-            }
 
-            Swap(i + 1, right);
-            return i + 1;
+                // Swap employees[i] and employees[maxIndex]
+                Employee temp = employees[i];
+                employees[i] = employees[maxIndex];
+                employees[maxIndex] = temp;
+            }
         }
+
 
         private void Swap(int i, int j)
         {
@@ -201,13 +185,15 @@ namespace Lab1
         // Display the sorted employee data in a table
         public void DisplayTable()
         {
-            Console.WriteLine($"{"Name|",-20} {"Number|",-10} {"Rate|",-10} {"Hours|",-10} {"Gross Pay|",-10}");
+            Console.WriteLine(new string('=', 65));
+            Console.WriteLine($"  {"Name",-21} {"Number",-(int)9.5} {"Rate",-(int)9.5} {"Hours",-8} {"Gross Pay",-(int)9.5}");
             Console.WriteLine(new string('=', 65));
 
             for (int i = 0; i < employeeCount; i++)
             {
-                Console.WriteLine($"|{employees[i]}|");
+                Console.WriteLine($"| {employees[i]}  |");
             }
+            Console.WriteLine(new string('=', 65));
         }
 
         public static void Main(string[] args)
@@ -223,16 +209,18 @@ namespace Lab1
             {
                 string menu =
 $@"
-Please select any
-------------------------------------------
-1. Sort by Employee Name (ascending)
-2. Sort by Employee Number (ascending)
-3. Sort by Employee Pay Rate (descending)
-4. Sort by Employee Hours (descending)
-5. Sort by Employee Gross Pay (descending)
-6. Exit
-Enter your choice: ";
-                Console.WriteLine(menu);
+------------------------------------------|
+Choose any from below options             |
+------------------------------------------|
+1) Sort by Employee Name (ascending)      |
+2) Sort by Employee Number (ascending)    |  
+3) Sort by Employee Pay Rate (descending) |
+4) Sort by Employee Hours (descending)    |
+5) Sort by Employee Gross Pay (descending)|
+6) Exit                                   |
+------------------------------------------|
+Enter your choice: ";                       
+                Console.Write(menu);
                 int choice;
 
                 if (int.TryParse(Console.ReadLine(), out choice))
@@ -240,31 +228,29 @@ Enter your choice: ";
                     switch (choice)
                     {
                         case 1:
-                            lab.QuickSortByName(0, lab.employeeCount - 1);
+                            lab.SelectionSortByName();
+                            //lab.QuickSortByName(0, lab.employeeCount - 1);
                             lab.DisplayTable();
                             break;
                         case 2:
-                            lab.QuickSortByNumber(0, lab.employeeCount - 1);
+                            lab.SelectionSortByNumber();
                             lab.DisplayTable();
                             break;
 
                         case 3:
-                            lab.QuickSortByRateDescending(0, lab.employeeCount - 1);
+                            lab.SelectionSortByRateDescending();
                             lab.DisplayTable();
                             break;
 
                         case 4:
-                            lab.QuickSortByHoursDescending(0, lab.employeeCount - 1);
+                            lab.SelectionSortByHoursDescending();
                             lab.DisplayTable();
                             break;
 
                         case 5:
-                            lab.QuickSortByGrossPayDescending(0, lab.employeeCount - 1);
+                            lab.SelectionSortByGrossPayDescending();
                             lab.DisplayTable();
                             break;
-
-                        // Implement other sorting options here
-
                         case 6:
                             exit = true;
                             Console.WriteLine("Ciao. ");
