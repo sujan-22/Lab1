@@ -332,7 +332,7 @@ Enter your choice: ";
                             Thread.Sleep(2000); // Waits for 2 seconds before exiting
                             break;
 
-                        // Display an error message for an invalid choice
+                        // Default case to display an error message for an invalid choice
                         default:
                             Console.WriteLine("Invalid choice. Please try again.");
                             break;
