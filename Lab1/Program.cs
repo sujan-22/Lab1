@@ -1,4 +1,4 @@
-﻿///I, Sujan Rokad, 000882948 certify that this material is my origianl work. No other person's work has been used without due acknowledgement.
+///I, Sujan Rokad, 000882948 certify that this material is my origianl work. No other person's work has been used without due acknowledgement.
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -41,7 +41,7 @@ namespace Lab1
                     {
                         // An array of string object that split each CSV file line with comma and stores it in employeeData array.
                         string[] employeeData = line.Split(',');
-                        
+
                         // If statement that checks if splitted data that stored in array has length of 4 and if it does then goes into if condition.
                         if (employeeData.Length == 4)
                         {
@@ -54,7 +54,7 @@ namespace Lab1
                         }
                     }
                 }
-            } 
+            }
             // catch block to handle an exception occurs during file reading or parsing
             catch (Exception e)
             {
@@ -65,6 +65,7 @@ namespace Lab1
 
         /// <summary>
         /// SelectionSort algorithm for sorting employees by Employee Name (ascending)
+        /// Reference to all SelecetionSort algorithms: https://code-maze.com/csharp-selection-sort/
         /// </summary>
         public void SelectionSortByName()
         {
@@ -112,7 +113,7 @@ namespace Lab1
                     // Compare the employee numbers of two employees
                     // If the number of the current employee 'j' is less than the number of the employee at 'minIndex',
                     if (employees[j].GetNumber() < employees[minIndex].GetNumber())
-                    {   
+                    {
                         // update 'minIndex' to point to the current employee 'j'
                         minIndex = j;
                     }
@@ -152,8 +153,8 @@ namespace Lab1
 
                 // Swap employees[i] and employees[maxIndex]
                 Employee temp = employees[i]; // Create a temporary variable 'temp' to hold the value of 'employees[i]'
-                employees[i] = employees[minIndex]; // Assign the value of 'employees[minIndex]' (the smaller element) to 'employees[i]'
-                employees[minIndex] = temp; // Assign the value of 'temp' (the original 'employees[i]') to 'employees[minIndex]'
+                employees[i] = employees[maxIndex]; // Assign the value of 'employees[minIndex]' (the smaller element) to 'employees[i]'
+                employees[maxIndex] = temp; // Assign the value of 'temp' (the original 'employees[i]') to 'employees[minIndex]'
             }
         }
 
@@ -169,7 +170,7 @@ namespace Lab1
             for (int i = 0; i < n - 1; i++)
             {
                 int maxIndex = i;
-                
+
                 // Inner loop that iterates through the remaining unsorted employees starting from the next element of 'i'
                 for (int j = i + 1; j < n; j++)
                 {
@@ -177,15 +178,15 @@ namespace Lab1
                     // Compare the hours of two employees
                     // If hour of the current employee 'j' is greater than hour of the employee at 'maxIndex',
                     if (employees[j].GetHours() > employees[maxIndex].GetHours())
-                    {   
+                    {
                         maxIndex = j; // update 'maxIndex' to point to the current employee 'j'
                     }
                 }
 
                 // Swap employees[i] and employees[maxIndex]
                 Employee temp = employees[i]; // Create a temporary variable 'temp' to hold the value of 'employees[i]'
-                employees[i] = employees[minIndex]; // Assign the value of 'employees[minIndex]' (the smaller element) to 'employees[i]'
-                employees[minIndex] = temp; // Assign the value of 'temp' (the original 'employees[i]') to 'employees[minIndex]'
+                employees[i] = employees[maxIndex]; // Assign the value of 'employees[minIndex]' (the smaller element) to 'employees[i]'
+                employees[maxIndex] = temp; // Assign the value of 'temp' (the original 'employees[i]') to 'employees[minIndex]'
             }
         }
 
@@ -216,18 +217,10 @@ namespace Lab1
 
                 // Swap employees[i] and employees[maxIndex]
                 Employee temp = employees[i]; // Create a temporary variable 'temp' to hold the value of 'employees[i]'
-                employees[i] = employees[minIndex]; // Assign the value of 'employees[minIndex]' (the smaller element) to 'employees[i]'
-                employees[minIndex] = temp; // Assign the value of 'temp' (the original 'employees[i]') to 'employees[minIndex]'
+                employees[i] = employees[maxIndex]; // Assign the value of 'employees[minIndex]' (the smaller element) to 'employees[i]'
+                employees[maxIndex] = temp; // Assign the value of 'temp' (the original 'employees[i]') to 'employees[minIndex]'
             }
         }
-
-
-        /*private void Swap(int i, int j)
-        {
-            Employee temp = employees[i];
-            employees[i] = employees[j];
-            employees[j] = temp;
-        }*/
 
         /// <summary>
         /// Display the sorted employee data in a table
@@ -236,8 +229,9 @@ namespace Lab1
         {
             // Display a horizontal line of '=' characters to separate the table visually
             Console.WriteLine(new string('=', 65));
-            
+
             // Display the table header with column headers and formatting
+            // Reference to below line: https://learn.microsoft.com/en-us/dotnet/standard/base-types/composite-formatting
             Console.WriteLine($"| {"Name",-21} {"Number",-(int)9.5} {"Rate",-(int)9.5} {"Hours",-8} {"Gross Pay  | ",-(int)9.5}");
 
             // Display another horizontal line of '=' characters for clarity
@@ -281,7 +275,7 @@ Choose any from below options             |
 5) Sort by Employee Gross Pay (descending)|
 6) Exit                                   |
 ------------------------------------------|
-Enter your choice: ";     
+Enter your choice: ";
 
                 // Display the menu to the user
                 Console.Write(menu);
@@ -306,19 +300,19 @@ Enter your choice: ";
                             lab.SelectionSortByNumber();
                             lab.DisplayTable();
                             break;
-                        
+
                         // Sort employees by pay rate in descending order
                         case 3:
                             lab.SelectionSortByRateDescending();
                             lab.DisplayTable();
                             break;
-                        
+
                         // Sort employees by hours in descending order
                         case 4:
                             lab.SelectionSortByHoursDescending();
                             lab.DisplayTable();
                             break;
-                        
+
                         // Sort employees by gross pay in descending order
                         case 5:
                             lab.SelectionSortByGrossPayDescending();
