@@ -84,7 +84,7 @@ namespace Lab1
         // ToString method to format employee information
         public override string ToString()
         {
-            return $"{name,-21} {number,-(int)9.5} {rate,-(int)9.5:C} {hours,-8:F2} {GetGross(),-(int)9.5:C}";
+            return $"{name ,-21} {number,-(int)9.5} {rate,-(int)9.5:C} {hours,-8:F2} {GetGross(),-(int)9.5:C}";
         }
     }
 
